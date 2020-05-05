@@ -1,25 +1,14 @@
-from scipy import optimize
-
-def solve_for_ss(s,g,n,alpha,delta):
-    """ solve for the steady state level of capital
-
-    Args:
-        s (float): saving rate
-        g (float): technological growth rate
-        n (float): population growth rate
-        alpha (float): cobb-douglas parameter
-        delta (float): capital depreciation rate 
-
-    Returns:
-        result (RootResults): the solution represented as a RootResults object
-
-    """ 
-    
-    # a. define objective function
-    f = lambda k: k**alpha
-    obj_kss = lambda kss: kss - (s*f(kss) + (1-delta)*kss)/((1+g)*(1+n))
-
-    #. b. call root finder
-    result = optimize.root_scalar(obj_kss,bracket=[0.1,100],method='bisect')
-    
-    return result
+def Y_t(D,K,A,L,E,a,b,e):
+    return D*(K**a)*((A*L)**b)*(E**e)
+def D_t(R,R_0,phi):
+    return (R/R_0)**phi
+def A_t1(A,g):
+    return A*(1+g)
+def L_t1(L,n):
+    return L*(1+n)
+def K_t1(s,Y,d,K):
+    return s*Y+(1-d)*K
+def R_t1(R,E):
+    return R-E
+def E_t(sE,R):
+    return sE*R    
